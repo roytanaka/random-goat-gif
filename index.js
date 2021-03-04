@@ -16,14 +16,13 @@ app.use('/', async (req, res) => {
       `https://api.giphy.com/v1/gifs/random?api_key=4x1BLBVGj8byXpfHMhkh3tx9RJc17xJo&tag=goats&rating=g`
     );
     const data = giphyRes.data.data;
-    const { mp4, url, height, width } = data.images.fixed_width;
+    const { url, height, width } = data.images.downsized_large;
     res.render('index', {
       imageGiphy: data.url,
       imageDescription: data.title,
       imageUrl: url,
       imageWidth: width,
       imageHeight: height,
-      videoUrl: mp4,
     });
   } catch (error) {
     console.error('/ error:', error);
