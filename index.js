@@ -15,8 +15,11 @@ app.use('/', async (req, res) => {
     const giphyRes = await axios.get(
       `https://api.giphy.com/v1/gifs/random?api_key=4x1BLBVGj8byXpfHMhkh3tx9RJc17xJo&tag=goats&rating=g`
     );
-    const { height, url, width } = giphyRes.data.data.images.downsized_large;
+    const data = giphyRes.data.data;
+    const { height, url, width } = data.images.downsized_large;
     res.render('index', {
+      imageGiphy: data.url,
+      imageDescription: data.title,
       imageUrl: url,
       imageWidth: width,
       imageHeight: height,
