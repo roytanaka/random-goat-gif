@@ -10,6 +10,7 @@ app.engine('mustache', mustacheExpress());
 
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/views');
+app.use(express.static(__dirname + '/public'));
 
 app.use('/', async (req, res) => {
   try {
@@ -27,7 +28,8 @@ app.use('/', async (req, res) => {
       videoUrl: mp4,
     });
   } catch (error) {
-    console.error('/ error:', error);
+    console.error(error);
+    res.status(500).redirect('/error.html');
   }
 });
 
