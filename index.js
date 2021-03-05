@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const axios = require('axios').default;
@@ -13,7 +14,7 @@ app.set('views', __dirname + '/views');
 app.use('/', async (req, res) => {
   try {
     const giphyRes = await axios.get(
-      `https://api.giphy.com/v1/gifs/random?api_key=4x1BLBVGj8byXpfHMhkh3tx9RJc17xJo&tag=goats&rating=g`
+      `https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPPHY_API}&tag=goats&rating=g`
     );
     const data = giphyRes.data.data;
     const { mp4, url, height, width } = data.images.original;
