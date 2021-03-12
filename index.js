@@ -13,19 +13,21 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 
 app.use('/', async (req, res) => {
+  const rand = Math.floor(Math.random() * Math.floor(200));
+
   try {
-    const giphyRes = await axios.get(
-      `https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPPHY_API}&tag=goats&rating=g`
+    const tenorRes = await axios.get(
+      `https://g.tenor.com/v1/search?key=${process.env.TENOR_API}&q=funny-goats&locale=en_US&contentfilter=medium&limit=1&media_filter=minimal&pos=${rand}`
     );
-    const data = giphyRes.data.data;
-    const { mp4, url, height, width } = data.images.original;
+    const data = tenorRes.data.results[0];
+    const { mp4, gif } = data.media[0];
     res.render('index', {
       imageGiphy: data.url,
-      imageDescription: data.title,
-      imageUrl: url,
-      imageWidth: width,
-      imageHeight: height,
-      videoUrl: mp4,
+      imageDescription: data.h1_title,
+      imageUrl: gif.url,
+      imageWidth: gif.dims[0],
+      imageHeight: gif.dims[1],
+      videoUrl: mp4.url,
     });
   } catch (error) {
     console.error(error);
